@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Login</title>
+</h:head>
+
+<h:body>
+	
+	<h:form>
+		<p:breadCrumb>
+			<p:menuitem/>
+			<p:menuitem value="Index JSF" action="index.jsf"/>
+			<p:menuitem value="Index Prime" action="indexjsf.jsf"/>
+		</p:breadCrumb>
+	</h:form>
+	
+	<h:form id="formulario">
+		<h:messages showDetail="true" showSummary="false" id="msg"/>
+		<h:panelGrid columns="2">
+			<h:outputLabel>Usuário:</h:outputLabel>
+			<h:outputText value="#{telefoneManegedBean.user.nome}"/>
+			
+			<h:outputLabel>Número:</h:outputLabel>
+			<h:inputText value="#{telefoneManegedBean.telefone.numero}"/>
+			
+			<h:outputLabel>Tipo:</h:outputLabel>
+			<h:inputText value="#{telefoneManegedBean.telefone.tipo}"/>
+			
+			<br/>
+			<br/>
+			
+			<h:commandButton value="Salvar" action="#{telefoneManegedBean.salvar}"></h:commandButton>
+			
+		</h:panelGrid>
+	</h:form>
+	 
+	<h:form id="formTelefone">
+		<h:dataTable value="#{telefoneManegedBean.user.telefoneUsers}" var="telefones" cellpadding="15" border="1" >
+			<f:facet name="header">Telefones</f:facet>
+			
+			<h:column>
+				<f:facet name="header">ID:</f:facet>
+				<h:outputText value="#{telefones.id}"/>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Número:</f:facet>
+				<h:outputText value="#{telefones.numero}"/>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Tipo</f:facet>
+				<h:outputText value="#{telefones.tipo}"/>
+			</h:column>
+			
+			<h:column>
+			<f:facet name="header">Excluir</f:facet>
+				<h:commandLink action="#{telefoneManegedBean.remover}" id="btnExcluir">
+					<h:graphicImage url="resources/img/delete.png"/>
+					<f:setPropertyActionListener value="#{telefones}" target="#{telefoneManegedBean.telefone}"/>
+					<f:ajax execute="btnExcluir" render="@form :formulario:msg"></f:ajax>
+				</h:commandLink>
+			</h:column>
+			
+		</h:dataTable>
+	</h:form>
+
+</h:body>
+
+</html>
